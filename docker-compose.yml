@@ -1,0 +1,22 @@
+version : '3'
+services:
+
+  mysql:
+    build: ./mysql
+    restart: always
+    ports:
+      - 5003:3306 
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_USER: vemap
+      MYSQL_PASSWORD: vemap1234!
+      MYSQL_DATABASE: products
+     
+  website:
+    build: ./website
+    volumes:
+      - ./website:/var/www/html
+    ports:
+      - 5005:80
+    depends_on:
+      - mysql
